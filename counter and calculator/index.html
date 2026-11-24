@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Counter and Calculator</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: lightblue;
+      text-align: center;
+    }
+
+    .container {
+      background: white;
+      width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    h1 { color: blue; }
+    h2 { color: green; }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      background: blue;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+function App() {
+  const [count, setCount] = React.useState(0);
+  const [num1, setNum1] = React.useState("");
+  const [num2, setNum2] = React.useState("");
+  const [result, setResult] = React.useState("");
+
+  function calculate(op) {
+    let a = Number(num1);
+    let b = Number(num2);
+
+    if (num1 === "" || num2 === "") {
+      setResult("Enter both numbers");
+      return;
+    }
+
+    switch(op) {
+      case "+":
+        setResult(a + b);
+        break;
+      case "-":
+        setResult(a - b);
+        break;
+      case "*":
+        setResult(a * b);
+        break;
+      case "/":
+        setResult(b === 0 ? "Cannot divide by zero" : a / b);
+        break;
+    }
+  }
+
+  return (
+    <div className="container">
+      <h1>Counter</h1>
+      <h2>{count}</h2>
+
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <button onClick={() => setCount(0)}>Reset</button>
+
+      <hr />
+
+      <h1>Calculator</h1>
+
+      <input type="number" placeholder="First Number"
+        value={num1}
+        onChange={e => setNum1(e.target.value)} />
+
+      <input type="number" placeholder="Second Number"
+        value={num2}
+        onChange={e => setNum2(e.target.value)} />
+
+      <br />
+
+      <button onClick={() => calculate("+")}>+</button>
+      <button onClick={() => calculate("-")}>-</button>
+      <button onClick={() => calculate("*")}>×</button>
+      <button onClick={() => calculate("/")}>÷</button>
+
+      <h2>Result: {result}</h2>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+
+</script>
+</body>
+</html>
